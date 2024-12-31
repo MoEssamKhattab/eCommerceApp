@@ -1,0 +1,22 @@
+<section class="pagination">
+    <% if (currentPage !== 1 && previousPage !== 1) { %>
+        <a href="?page=1">1</a> <!-- The query(after the '?' mark) can be accessed by [req.query.keyName] in the controller method of the request URL and the request URL here is the current URL that the value of the [href] is not an absolute path -->
+    <% } %>
+    <% if (hasPreviousPage) { %>
+        <a href="?page=<%= previousPage %>"><%= previousPage %></a>
+    <% } %>
+    <a href="?page=<%= currentPage %>" class="active"><%= currentPage %></a>
+    <% if (hasNextPage) { %>
+        <a href="?page=<%= nextPage %>"><%= nextPage %></a>
+    <% } %>
+    <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+        <a href="?page=<%= lastPage %>"><%= lastPage %></a>
+    <% } %>
+</section>
+
+<!-- To understand the logic of creating the pagination ->
+1) we have [previousPage, currentPage, nextPage] & [hasPreviousPage, hasNextPage] & [The last page]
+2) i want to make page 1 exist as a border that when the current page for example is 3, then the previous one is 2 and next is 4, then they will be displyed [2 3 4], but i want to show page 1 to easily access it
+3) putting the links ordered [previousPage](after checking that the current page has a previous one) -> [currentPage](with the class "active") -> [nextPage](after checking that the current page has a next one)
+4) i want to make the last page exist as a border that when the current page for example is 3, then the previous one is 2, but i want to show the last page to easily access it
+-->

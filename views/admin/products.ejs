@@ -1,0 +1,50 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (prods.length > 0) { %>
+                    <div class="grid">
+                        <% for (let product of prods) { %>
+                            <article class="card product-item">
+                                <header class="card__header">
+                                    <h1 class="product__title">
+                                        <%= product.title %>
+                                    </h1>
+                                </header>
+                                <div class="card__image">
+                                    <img src="/<%= product.imageUrl %>" alt="<%= product.title %>"> <!-- Note -> the value of the src attribute starts with '/' that it is an absolute path, then the request URL will be "localhost/images/imageName.png". if there is no the starting slash, then the request URL will be "localhost/admin/images/imageName.png" means the "images/imageName.png" will be added to the current URL-->
+                                </div>
+                                <div class="card__content">
+                                    <h2 class="product__price">$
+                                        <%= product.price %>
+                                    </h2>
+                                    <p class="product__description">
+                                        <%= product.description %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/admin/edit-product/<%= product._id %>?edit=true" class="btn">Edit</a>
+                                    <!-- <form action="/admin/delete-product" method="POST">
+                                        <input type="hidden" value="<%= product._id %>" name="productId">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form> -->
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" value="<%= product._id %>" name="productId">
+                                    <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button> <!-- [this] -> refers to the button element -->
+                                </div>
+                            </article>
+                            <% } %>
+                    </div>
+                    <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, previousPage: previousPage,
+                        lastPage: lastPage, hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage}) %>
+                    <% } else { %>
+                <h1>No Products Found!</h1>
+                <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>
+            <script src="/js/admin.js"></script>
