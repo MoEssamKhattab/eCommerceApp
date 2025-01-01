@@ -21,3 +21,10 @@ ENV SESSION_SECRET=${SESSION_SECRET}
 
 # Start the application
 CMD ["npm", "start"]
+
+
+# docker run -p 3000:3000 `
+#    -e MONGODB_URI="mongodb+srv://youssefalaaalfahl:You01064167295@cluster0.pj7i39k.mongodb.net/shop?retryWrites=true&w=majority" `
+#    -e EMAIL_PASS="zatbhvulzmncofng" `
+#    -e SESSION_SECRET="mySecret" `
+#    ecommerceapp
