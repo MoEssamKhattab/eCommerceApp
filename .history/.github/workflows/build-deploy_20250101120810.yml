@@ -72,19 +72,18 @@ jobs:
         run: |
           az container show --resource-group $RESOURCE_GROUP --name $ACI_NAME --query ipAddress.fqdn --output tsv
 
-  cleanup:
-    - name: Remove Old Docker Images
-    run: |
-      TAGS_TO_DELETE=$(az acr repository show-tags \
-        --name $AZURE_CONTAINER_REGISTRY \
-        --repository ecommerceapp \
-        --orderby time_desc \
-        --query "[3:]" \
-        --output tsv)
+- name: Remove Old Docker Images
+  run: |
+    TAGS_TO_DELETE=$(az acr repository show-tags \
+      --name $AZURE_CONTAINER_REGISTRY \
+      --repository ecommerceapp \
+      --orderby time_desc \
+      --query "[3:]" \
+      --output tsv)
 
-      for TAG in $TAGS_TO_DELETE; do
-        az acr repository delete \
-          --name $AZURE_CONTAINER_REGISTRY \
-          --image ecommerceapp:$TAG \
-          --yes
-      done
+    for TAG in $TAGS_TO_DELETE; do
+      az acr repository delete \
+        --name $AZURE_CONTAINER_REGISTRY \
+        --image ecommerceapp:$TAG \
+        --yes
+    done
